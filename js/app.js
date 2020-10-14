@@ -27,7 +27,7 @@ const check = (rx, log) => {
         { group: "g3", ...result[3] },
         { group: "g3", ...result[4] },
     ];
-    const hash = result.reduce((a, c) => `${a}${c.index}`, '');
+    const hash = result.map(d => d.index).join('');
     console.log(`Result: ${JSON.stringify(groups)}`);
     draw(groups, hash);
     cleanup();
