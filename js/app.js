@@ -1,13 +1,20 @@
-let pool = [];
+let dragons = [];
 let clearQueueId = null;
+let isAlreadyMatched = false;
 
-const check = (rx, log) => {
+const check = (rx, log, isTest = false) => {
     const isReset = ResetRegex.test(log);
-    if (isReset) return clear();
+    if (isReset) {
+        clear();
+        isAlreadyMatched = false;
+        return;
+    }
+    if(isAlreadyMatched) return;
     const matched = log.match(rx);
-    if (matched) pool.push(matched);
-    if (pool.length != 5) return;
-    const result = pool
+    if (matched) dragons.push(matched);
+    if (dragons.length != 5) return;
+    if(!isTest) isAlreadyMatched = true;
+    const result = dragons
         .map(ret => {
             const pos = ret.groups.pos.split("|");
             const px = parseFloat(pos[0]);
@@ -30,11 +37,7 @@ const check = (rx, log) => {
     const hash = result.map(d => d.index).join('');
     console.log(`Result: ${JSON.stringify(groups)}`);
     draw(groups, hash);
-    cleanup();
-}
-
-const cleanup = () => {
-    pool = [];
+    dragons = [];
 }
 
 const element = document.querySelector("#canvas");
@@ -62,7 +65,7 @@ const drawPlayer = (rad, index) => {
     context.lineWidth = 1;
     context.fillStyle = Color[`g${index}`];
     context.font = `32px consolas`;
-    context.fillText(index, rx - SIZE / 2, ry + SIZE)
+    context.fillText(index, rx - SIZE / 2, ry + SIZE);
     context.stroke();
 }
 const draw = (groups, hash) => {
@@ -71,8 +74,8 @@ const draw = (groups, hash) => {
     const playerCirclePos = HashToCircle[hash];
     playerCirclePos.split(',').forEach((pos, i) => drawPlayer(CircleToRadian[pos], i + 1));
     element.style.display = "block";
-    console.log("End Rendering.");
     clearQueueId = setTimeout(clear, Query.duration);
+    console.log("End Rendering.");
 }
 
 const clear = () => {
@@ -113,7 +116,7 @@ const setup = async () => {
 if (TestMode) {
     console.log("Test")
     const rx = AddedNewCombatantDragons["Japanese"];
-    TestLogs.forEach(log => check(rx, log));
+    TestLogs.forEach(log => check(rx, log, true));
 }
 
 setup();

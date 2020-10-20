@@ -123,7 +123,7 @@ const AddedNewCombatantDragons = {
     Korean: null,
 }
 
-const ResetRegex = /^33\|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{7}(\+|-)\d{2}:\d{2}\|[0-9a-fA-F]{8}\|40000005\|00\|00\|00\|00\|[0-9a-fA-F]{32}$/
+const ResetRegex = /^33\|\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}\.\d{7}(\+|-)\d{2}:\d{2}\|[0-9a-fA-F]{8}\|40000005|40000003|\|00\|00\|00\|00\|[0-9a-fA-F]{32}$/;
 
 const DragonPosMapping = {
     "90": 0,
