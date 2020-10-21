@@ -4,11 +4,7 @@ let isAlreadyMatched = false;
 
 const check = (rx, log, isTest = false) => {
     const isReset = ResetRegex.test(log);
-    if (isReset) {
-        clear();
-        isAlreadyMatched = false;
-        return;
-    }
+    if (isReset) return reset();
     if(isAlreadyMatched) return;
     const matched = log.match(rx);
     if (matched) dragons.push(matched);
@@ -97,6 +93,13 @@ const clear = () => {
     console.log("Clear rendering.");
     element.style.display = "none";
     context.clearRect(0, 0, 600, 600);
+}
+
+const reset = () => {
+    console.log("Reset.");
+    clear();
+    isAlreadyMatched = false;
+    return;
 }
 
 const checkEvent = rx => e => check(rx, e.rawLine);
