@@ -90,9 +90,9 @@ const draw = (groups, hash) => {
 
 const clear = () => {
     clearTimeout(clearQueueId);
-    console.log("Clear rendering.");
     element.style.display = "none";
     context.clearRect(0, 0, 600, 600);
+    console.log("Clear Rendering.");
 }
 
 const reset = () => {
