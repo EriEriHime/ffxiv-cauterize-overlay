@@ -63,16 +63,30 @@ const drawPlayer = (rad, index) => {
     context.fill();
     context.strokeStyle = "black";
     context.lineWidth = 1;
+    context.stroke();
+
     context.fillStyle = Color[`g${index}`];
     context.font = `32px consolas`;
-    context.fillText(index, rx - SIZE / 2, ry + SIZE);
-    context.stroke();
+    context.textAlign = "center";
+    context.fillText(index, rx, ry + SIZE);
 }
+
+const drawTextForCall = (text) => {
+    const rx = ORIGIN.x;
+    const ry = ORIGIN.y + context.canvas.height/2 - SIZE ;
+    context.fillStyle = "rgba(255, 0, 255, 1)";
+    context.strokeStyle = "black";
+    context.font = `24px consolas`;
+    context.textAlign = "center";
+    context.fillText(text, rx, ry);
+}
+
 const draw = (groups, hash) => {
     console.log("Start Rendering.");
     groups.forEach(d => drawDragon(d.rad, d.group));
     const playerCirclePos = HashToCircle[hash];
     playerCirclePos.split(',').forEach((pos, i) => drawPlayer(CircleToRadian[pos], i + 1));
+    drawTextForCall(playerCirclePos.replace(/,/g, ' '))
     element.style.display = "block";
     clearQueueId = setTimeout(clear, Query.duration);
     console.log("End Rendering.");
